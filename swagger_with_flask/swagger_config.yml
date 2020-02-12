@@ -1,0 +1,229 @@
+post:
+  summary: "Add Employee"
+  description: "This is a simple API which returns the Employee Added Successfully"
+  consumes:
+  - "application/json"
+  produces:
+  - "application/json"
+  parameters:
+  - in: "body"
+    name: "body"
+    description: "Accepts a input dictionary of inputs x1,x2,x3,x4,x5"
+    required: true
+    schema:
+      type: "object"
+      properties:
+        x1:
+          type: "string"
+          example : Name
+        x2:
+          type: "string"
+          example : UniqeId
+        x3:
+          type: "string"
+          example: abc@gmail.com
+        x4:
+          type: "integer"
+          format: "int64"
+          example: 000000000
+        x5:
+          type: "string"
+          example: abc@11
+
+
+  responses:
+    405:
+      description: "Invalid input"
+  security:
+    - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+delete:
+  summary: "Delete Employee"
+  description: "This can only be done by the logged in user."
+  operationId: "deleteUser"
+  produces:
+    - "application/json"
+    - "application/json"
+  parameters:
+  - in: "body"
+    name: "body"
+    description: "The name that needs to be deleted"
+    schema:
+      type: "object"
+      properties:
+        y1:
+          type: "string"
+          example: UniqeId
+  responses:
+    400:
+      description: "Invalid username supplied"
+    404:
+      description: "User not found"
+put:
+  summary: "Update Employee"
+  description: "This is a simple API which returns Update Records of Employee"
+  consumes:
+  - "application/json"
+  produces:
+  - "application/json"
+  parameters:
+  - in: "body"
+    name: "body"
+    description: "Accepts a input dictionary of inputs z1,z2 & z3"
+    required: true
+    schema:
+      type: "object"
+      properties:
+        z1:
+          type: "integer"
+          format: "int64"
+          example: 000000000
+        z2:
+          type: "string"
+          example: abc@11
+        z3:
+          type: "string"
+          example: UniqeId
+  responses:
+    405:
+      description: "Invalid input"
+get:
+  tags:
+  - "user"
+  summary: "Logs user into the system"
+  description: ""
+  operationId: "loginUser"
+  produces:
+  - "application/xml"
+  - "application/json"
+  parameters:
+  - name: "username"
+    in: "query"
+    description: "The user name for login"
+    required: true
+    type: "string"
+  - name: "password"
+    in: "query"
+    description: "The password for login in clear text"
+    required: true
+    type: "string"
+  responses:
+    200:
+      description: "successful operation"
+      schema:
+        type: "string"
+      headers:
+        X-Rate-Limit:
+          type: "integer"
+          format: "int32"
+          description: "calls per hour allowed by the user"
+        X-Expires-After:
+          type: "string"
+          format: "date-time"
+          description: "date in UTC when token expires"
+        400:
+          description: "Invalid username/password supplied"
+
+
+
+
+
+
+
+
+
+
+
+#post:
+#  summary: "Add Employee"
+#  description: "This is a simple API which returns the Employee Added Successfully"
+#  consumes:
+#  - "application/json"
+#  produces:
+#  - "application/json"
+#  parameters:
+#  - in: "body"
+#    name: "body"
+#    description: "Accepts a input dictionary of inputs"
+#    required: true
+#    schema:
+#      type: "object"
+#      properties:
+#        q1:
+#          type: "string"
+#          example : ProductId
+#        q2:
+#          type: "string"
+#          example: ProductName
+#        q3:
+#          type: "integer"
+#          format: "int64"
+#          example: 01
+#        q4:
+#          type: "integer"
+#          format: "int64"
+#          example: 2466
+#  responses:
+#    405:
+#      description: "Invalid input"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#put:
+#  summary: "Update Stock"
+#  description: "This is a simple API which returns Update Records of Stock"
+#  consumes:
+#  - "application/json"
+#  produces:
+#  - "application/json"
+#  parameters:
+#  - in: "body"
+#    name: "body"
+#    description: "Accepts a input dictionary"
+#    required: true
+#    schema:
+#      type: "object"
+#      properties:
+#        s1:
+#          type: "string"
+#          example: ProductID
+#        s2:
+#          type: "string"
+#          example: 05
+#  responses:
+#    405:
+#      description: "Invalid input"
+#
+#
+#
+#get:
+#  tags:
+#  - "user"
+#  summary: "Logs user into the system"
+#  description: ""
+#  operationId: "loginUser"
+#  produces:
+#  - "application/xml"
+#  - "application/json"
+#  parameters:
+#  - in: "body"
+#    name: "body"
+#    description: "Accepts a input dictionary"
+#    required: true
+#    schema:
+#      type: "object"
+#      properties:
+#        v1:
+#          type: "string"
+#  responses:
+#    405:
+#      description: "Invalid input"
