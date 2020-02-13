@@ -169,40 +169,40 @@ def update_stock(product_id2,product_avail2):
 
 
 
-def views(emp_id):
-    a=emp_id
-    try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='employee',
-                                             user='root',
-                                             password='')
-        employee_info = "select * from elect_items"
-        cursor = connection.cursor()
-        cursor.execute(employee_info)
-        records = cursor.fetchall()
-        # record = cursor.fetchone()
-        # print(record[0])
-        a = []
-        b = []
-        for row in records:
-            a.append(row[1])
-            b.append(row[2])
-
-        connection.commit()
-        # print('Sucess')
-        cursor.close()
-    except Error as e:
-        print("Error while connecting to MySQL", e)
-    finally:
-        if (connection.is_connected()):
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-    res = {}
-    res = {a[i]: b[i] for i in range(len(a))}
-    print("Resultant dictionary is : " + str(res))
-    return res
-
+# def views(emp_id):
+    # a=emp_id
+    # try:
+    #     connection = mysql.connector.connect(host='localhost',
+    #                                          database='employee',
+    #                                          user='root',
+    #                                          password='')
+    #     employee_info = "select * from elect_items"
+    #     cursor = connection.cursor()
+    #     cursor.execute(employee_info)
+    #     records = cursor.fetchall()
+    #     # record = cursor.fetchone()
+    #     # print(record[0])
+    #     a = []
+    #     b = []
+    #     for row in records:
+    #         a.append(row[1])
+    #         b.append(row[2])
+    #
+    #     connection.commit()
+    #     # print('Sucess')
+    #     cursor.close()
+    # except Error as e:
+    #     print("Error while connecting to MySQL", e)
+    # finally:
+    #     if (connection.is_connected()):
+    #         cursor.close()
+    #         connection.close()
+    #         print("MySQL connection is closed")
+    # res = {}
+    # res = {a[i]: b[i] for i in range(len(a))}
+    # print("Resultant dictionary is : " + str(res))
+    # return res
+    #
 
 
 app = Flask(__name__)
@@ -318,19 +318,46 @@ def update_stk():
     return json.dumps(res)
 
 
-@app.route("/Views", methods=["GET"])
+@app.route("/Views", methods=["POST"])
 @swag_from("swagger_config.yml")
 def view():
     input_json = request.get_json()
     try:
-        emp_id = int(input_json["v1"])
-        print(emp_id)
-        res = views(emp_id)
+        product_id2 = input_json["v1"]
+        connection = mysql.connector.connect(host='localhost',
+                                                database='employee',
+                                                user='root',
+                                                password='')
+        employee_info = "select * from elect_items"
+        cursor = connection.cursor()
+        cursor.execute(employee_info)
+        records = cursor.fetchall()
+            # record = cursor.fetchone()
+            # print(record[0])
+        a = []
+        b = []
+        for row in records:
+            a.append(row[1])
+            b.append(row[2])
+        # print(a)
+        connection.commit()
+            # print('Sucess')
+        cursor.close()
+    except Error as e:
+        res1 = {"success": False, "message": "Unknown error"}
+        print(res1)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+    res1 = {}
+    res1 = {a[i]: b[i] for i in range(len(a))}
+    print("Resultant dictionary is : " + str(res1))
 
-    except:
-        res = {"success": False, "message": "Unknown error"}
-    return json.dumps(res)
+
+    return json.dumps(str(res1))
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8792)
+    app.run(debug=True, port=8793)
